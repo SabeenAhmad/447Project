@@ -2,6 +2,32 @@
 
 -- Anna
 
+CREATE TABLE User (
+    FirstName VARCHAR(255) PRIMARY KEY,
+    LastName VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    AddressNumber VARCHAR(255) NOT NULL,
+    PhoneNumber VARCHAR(255) NOT NULL,
+);
+
+
+CREATE TABLE LibraryStaff (
+    StaffID INT NOT NULL,
+    Salary INT NOT NULL,
+    PostitionName VARCHAR(255) NOT NULL,
+    PositionType VARCHAR(255) NOT NULL,
+    FOREIGN KEY (StaffID) REFERENCES User(UserID)
+);
+
+
+CREATE TABLE SystemAdministrator (
+    StaffID INT NOT NULL,
+    Managees VARCHAR(255) NOT NULL,
+    FOREIGN KEY (StaffID) REFERENCES User(UserID)
+);
+
+
+
 -- Hart
 
 -- Kaden
