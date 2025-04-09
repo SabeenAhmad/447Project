@@ -102,6 +102,21 @@ CREATE TABLE Amount (
 
 -- Audrey
 
+--Publisher
+CREATE TABLE Publisher(
+    PublisherID INT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL
+)
+--Author
+CREATE TABLE Author(
+    AuthorID INT PRIMARY KEY,
+    Name VarCHAR(255) NOT NULL
+)
+--genre
+CREATE TABLE Genre(
+    GenreID INT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL
+)
 
 
 --INSERTING DATA
