@@ -3,7 +3,8 @@
 -- Anna
 
 CREATE TABLE User (
-    FirstName VARCHAR(255) PRIMARY KEY,
+    UserID INT PRIMARY KEY,
+    FirstName VARCHAR(255) NOT NULL,
     LastName VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
     AddressNumber VARCHAR(255) NOT NULL,
@@ -12,19 +13,21 @@ CREATE TABLE User (
 
 
 CREATE TABLE LibraryStaff (
-    StaffID INT NOT NULL,
+    StaffID INT PRIMARY KEY,
     Salary INT NOT NULL,
-    PostitionName VARCHAR(255) NOT NULL,
+    PositionName VARCHAR(255) NOT NULL,
     PositionType VARCHAR(255) NOT NULL,
     FOREIGN KEY (StaffID) REFERENCES User(UserID)
-);
+)
+    INHERITS(User);
 
 
 CREATE TABLE SystemAdministrator (
-    StaffID INT NOT NULL,
-    Managees VARCHAR(255) NOT NULL,
+    StaffID INT PRIMARY KEY,
+    Managees VARCHAR(255),
     FOREIGN KEY (StaffID) REFERENCES User(UserID)
-);
+)
+    INHERITS(User);
 
 
 
@@ -32,7 +35,8 @@ CREATE TABLE SystemAdministrator (
 
 -- Kaden
 CREATE TABLE Item (
-    ISBN CHAR(13) PRIMARY KEY,
+    ItemID INT PRIMARY
+    ISBN CHAR(13) NOT NULL,
     Title VARCHAR(255) NOT NULL,
     Author VARCHAR(255) NOT NULL,
     PublicationYear INT NOT NULL,
@@ -40,21 +44,24 @@ CREATE TABLE Item (
     GenreID INT NOT NULL,
     Quantity INT DEFAULT 0,
     AuthorID INT NOT NULL,
-    CONSTRAINT fk_publisher FOREIGN KEY (PublisherID) REFERENCES Publisher(PublisherID),
-    CONSTRAINT fk_genre FOREIGN KEY (GenreID) REFERENCES Genre(GenreID),
-    CONSTRAINT fk_author FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID)
+    FOREIGN KEY (PublisherID) REFERENCES Publisher(PublisherID),
+    FOREIGN KEY (GenreID) REFERENCES Genre(GenreID),
+    FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID)
 );
 
 CREATE TABLE Book (
 	ItemID INT PRIMARY KEY,
     QuantityAvailable INT NOT NULL,
-    CONSTRAINT fk_item FOREIGN KEY (ItemID) REFERENCES Item(ItemID) 
-);
+    FOREIGN KEY (ItemID) REFERENCES Item(ItemID) 
+)
+    INHERITS(Item);
 
 CREATE TABLE DigitalMedia (
 	ItemID INT PRIMARY KEY, 
 	Medium VARCHAR(225) NOT NULL, 
-    CONSTRAINT fk_item_digital_media FOREIGN KEY (ItemID) REFERENCES Item(ItemID) )
+    FOREIGN KEY (ItemID) REFERENCES Item(ItemID)
+)
+    INHERITS(Item);
 
 -- Sriya
 
@@ -63,11 +70,13 @@ CREATE TABLE LibraryMember (
     LibraryMemberID INT PRIMARY KEY,
     ItemsCheckoutOut INT NOT NULL,
     DateJoined DATE NOT NULL,
-    OutstandingBalance DECIMAL(5,2) DEFAULT 0.00 NOT NULL,
-    Sex CHAR(1) NOT NULL,
+    OutstandingBalance DECIMAL(5,2) DEFAULT 0.00 NOT NULL CHECK(OutstandingBalance >= 0),
+    Sex CHAR(1) NOT NULL CHECK (Sex IN ('M','F','O')),
     DOB DATE NOT NULL,
-    Status VARCHAR(20) NOT NULL
-);
+    Status VARCHAR(20) NOT NULL,
+    FOREIGN KEY(LibraryMemberID) REFERENCES User(UserID) 
+)
+    INHERITS(User);
 --Report
 CREATE TABLE Report (
     ReportID INT PRIMARY KEY,
