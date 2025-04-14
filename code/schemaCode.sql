@@ -102,6 +102,35 @@ CREATE TABLE Amount (
 
 -- Audrey
 
+--Copy
+CREATE TABLE Copy(
+    CopyID INT PRIMARY KEY,
+    ItemID INT NOT NULL,
+    Status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (ItemID) REFERENCES Item(ItemID)
+)
+--Transaction
+CREATE TABLE Transaction(
+    TransactionID INT PRIMARY KEY,
+    CopyID INT NOT NULL,
+    UserID INT NOT NULL,
+    DateCheckOut DATE NOT NULL,
+    DueDate DATE NOT NULL,
+    NumRenewals INT NOT NULL,
+    ReturnDate DATE NOT NULL
+    FOREIGN KEY (CopyID) REFERENCES Copy(CopyID),
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
+)
+--Hold
+CREATE TABLE Hold(
+    HoldID INT PRIMARY KEY,
+    CopyID INT NOT NULL,
+    HoldDate DATE NOT NULL,
+    ExpirationDate DATE NOT NULL,
+    Status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (CopyID) REFERENCES Copy(CopyID)
+
+)
 --Publisher
 CREATE TABLE Publisher(
     PublisherID INT PRIMARY KEY,
