@@ -59,6 +59,7 @@ CREATE TABLE Book (
 CREATE TABLE DigitalMedia (
 	ItemID INT PRIMARY KEY, 
 	Medium VARCHAR(225) NOT NULL, 
+    QuantityAvailable INT NOT NULL,
     FOREIGN KEY (ItemID) REFERENCES Item(ItemID)
 )
     INHERITS(Item);
