@@ -95,17 +95,6 @@ CREATE TABLE DigitalMedia (
 
 -- Sriya
 
---Report
-CREATE TABLE Report (
-    Report_ID INT PRIMARY KEY,
-    Staff_ID INT NOT NULL,
-    Borrowing_Trends VARCHAR(255) NOT NULL,
-    Number_Of_Checkouts INT NOT NULL,
-    Date DATE NOT NULL,
-    Time_Period VARCHAR(50) NOT NULL,
-    FOREIGN KEY (Staff_ID) REFERENCES LibraryStaff(Staff_ID)
-);
-
 --Transactions NOTE: NEED Plural because else its a keyword
 CREATE TABLE Transactions (
     Transaction_ID INT PRIMARY KEY,
