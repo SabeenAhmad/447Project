@@ -26,22 +26,26 @@ SELECT
     au.First_Name,
     au.Last_Name,
     ca.Login_Time,
-    ca.Logout_Time
+    ca.Logout_Time,
+    AGE(ca.Logout_Time, ca.Login_Time) AS Duration
 FROM Computer_Activity ca
 JOIN AppUser au ON ca.User_ID = au.User_ID
 ORDER BY ca.Login_Time DESC;
+
 
 
 --Search both books and items:
 SELECT copy.copy_id, Item.title FROM copy
 NATURAL JOIN Item 
 WHERE status = 'Available'
-Search books:
+
+--Search books:
 SELECT copy.copy_id, Item.title FROM copy
 NATURAL JOIN Item 
 NATURAL JOIN book
 WHERE status = 'Available'
-Search digital media
+
+--Search digital media
 SELECT copy.copy_id, Item.title FROM copy
 NATURAL JOIN Item 
 NATURAL JOIN DigitalMedia
@@ -116,7 +120,8 @@ ORDER BY
 --2.Book availability–list all available books within a specific genre
 SELECT 
     i.Title,
-    a.Name AS Author,
+    a.first_name,
+a.last_name,
     g.Name AS Genre,
     b.Quantity_Available
 FROM 
@@ -129,7 +134,8 @@ JOIN
     Author a ON i.Author_ID = a.Author_ID
 WHERE 
     b.Quantity_Available > 0
-GROUP BY G.name
+	AND g.Name = 'GENRENAME';
+
 
 
 --3.Frequent borrowers of a specific genre–identify members who borrowed the most books in a certain genre in the last year
